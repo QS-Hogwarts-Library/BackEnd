@@ -4,32 +4,30 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
-@Document(collection = "students")
-public class Student {
+@Document(collection = "books")
+public class Book {
 
     @Id
     private String id;
 
-    private String name;
-    private String email;
-    private String registrationNumber;
+    private String title;
+    private String author;
+    private String subject;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // Constructors
-    public Student() {
+    public Book() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Student(String name, String email, String registrationNumber) {
+    public Book(String title, String author, String subject) {
         this();
-        this.name = name;
-        this.email = email;
-        this.registrationNumber = registrationNumber;
+        this.title = title;
+        this.author = author;
+        this.subject = subject;
     }
 
-    // Getters and setters
     public String getId() {
         return id;
     }
@@ -38,30 +36,30 @@ public class Student {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
         this.updatedAt = LocalDateTime.now();
     }
 
-    public String getEmail() {
-        return email;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAuthor(String author) {
+        this.author = author;
         this.updatedAt = LocalDateTime.now();
     }
 
-    public String getRegistrationNumber() {
-        return registrationNumber;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setRegistrationNumber(String registrationNumber) {
-        this.registrationNumber = registrationNumber;
+    public void setSubject(String subject) {
+        this.subject = subject;
         this.updatedAt = LocalDateTime.now();
     }
 
