@@ -1,6 +1,6 @@
 package com.example.educationalqualityproject.repository;
 
-import com.example.educationalqualityproject.entity.Student;
+import com.example.educationalqualityproject.entity.Wizard;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 @Repository
