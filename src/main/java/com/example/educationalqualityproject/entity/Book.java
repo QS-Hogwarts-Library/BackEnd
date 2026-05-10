@@ -9,7 +9,7 @@ public class Book {
 
     @Id
     private String id;
-
+private String statusLeitura;
     private String title;
     private String author;
     private String subject;
@@ -31,7 +31,9 @@ public class Book {
     public String getId() {
         return id;
     }
-
+public String getStatusLeitura() {
+    return statusLeitura;
+}
     public void setId(String id) {
         this.id = id;
     }
@@ -78,4 +80,9 @@ public class Book {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+    
+    public void setStatusLeitura(String statusLeitura) {
+    this.statusLeitura = statusLeitura;
+    this.updatedAt = LocalDateTime.now();
+}
 }
