@@ -4,32 +4,30 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
-@Document(collection = "teachers")
-public class Teacher {
+@Document(collection = "wizards")
+public class Wizard {
 
     @Id
     private String id;
 
     private String name;
     private String email;
-    private String department;
+    private String magicRegistration;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // Constructors
-    public Teacher() {
+    public Wizard() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Teacher(String name, String email, String department) {
+    public Wizard(String name, String email, String magicRegistration) {
         this();
         this.name = name;
         this.email = email;
-        this.department = department;
+        this.magicRegistration = magicRegistration;
     }
 
-    // Getters and setters
     public String getId() {
         return id;
     }
@@ -56,12 +54,12 @@ public class Teacher {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public String getDepartment() {
-        return department;
+    public String getMagicRegistration() {
+        return magicRegistration;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setMagicRegistration(String magicRegistration) {
+        this.magicRegistration = magicRegistration;
         this.updatedAt = LocalDateTime.now();
     }
 
