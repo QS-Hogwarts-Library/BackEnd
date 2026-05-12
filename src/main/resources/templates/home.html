@@ -1,19 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html(~{::#content})}">
-<head>
-    <meta charset="UTF-8">
-    <title>Home - Hogwarts Library</title>
-</head>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: html(~{::#content})}">
+
 <body>
-    <div id="content">
-        <div class="jumbotron">
-            <h1 class="display-4">Welcome to Hogwarts Library System</h1>
-            <p class="lead">This is a simple application for managing wizards and books.</p>
-            <hr class="my-4">
-            <p>Use the navigation menu to manage wizards and the library collection.</p>
-            <a class="btn btn-primary btn-lg" href="/wizards" role="button">Manage Wizards</a>
-            <a class="btn btn-secondary btn-lg" href="/books" role="button">Manage Books</a>
+
+<div id="content">
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>Hogwarts Library</h1>
+
+            <p>
+                Explore um universo mágico de conhecimento,
+                livros encantados e aventuras inspiradas no
+                mundo bruxo.
+            </p>
+
+            <a href="/books" class="magic-btn">
+                Explorar Livros
+            </a>
+
+           <a href="/wizards/register" class="magic-btn">
+            Criar Conta
+           </a>
+
         </div>
-    </div>
+
+    </section>
+
+</div>
+
 </body>
 </html>

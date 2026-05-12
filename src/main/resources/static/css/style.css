@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marcellus+SC&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+   
+}
+
+body{
+    background:#040816;
+    color:#e8ecf7;
+    font-family:'Inter', sans-serif;
+    overflow-x:hidden;
+}
+
+.navbar{
+    background:rgba(3,8,24,0.82)!important;
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(197,219,255,0.08);
+    padding:18px 0;
+}
+
+.navbar-brand{
+    font-family: 'Cinzel', serif;
+    color:#dbe7ff!important;
+    font-size:1.7rem;
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+.nav-link{
+    color:#d4d9e6!important;
+    margin-left:18px;
+    font-size:0.95rem;
+    transition:0.3s;
+}
+
+.nav-link:hover{
+    color:#ffffff!important;
+}
+
+.hero{
+    min-height:92vh;
+    background:
+    linear-gradient(rgba(4,8,22,0.72), rgba(4,8,22,0.88)),
+    url('/images/hogwarts-bg.png');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+}
+
+.hero-content{
+    max-width:760px;
+}
+
+.hero-content h1{
+    font-family: 'Grenze Gotisch', serif;
+    font-size:5.5rem;
+    font-weight:700;
+    color:#e7efff;
+    line-height:1.1;
+    margin-bottom:24px;
+    text-shadow:0 4px 20px rgba(0,0,0,0.4);
+     letter-spacing:3px;
+}
+
+.hero-content p{
+    font-size:1.15rem;
+    line-height:1.9;
+    color:#d0d7e6;
+    margin-bottom:38px;
+}
+
+.magic-btn{
+    background:#1737a4;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:14px 30px;
+    font-weight:500;
+    text-decoration:none;
+    transition:0.3s;
+    display:inline-block;
+    margin:8px;
+}
+
+.magic-btn:hover{
+    background:#2447c7;
+    transform:translateY(-2px);
+    color:white;
+}
+
+.secondary-btn{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.15);
+}
+
+.secondary-btn:hover{
+    background:rgba(255,255,255,0.08);
+}
+
+.form-container{
+    min-height:100vh;
+    background:
+    linear-gradient(rgba(4,8,22,0.82), rgba(4,8,22,0.45)),
+    url('/images/books-bg.png');
+    background-size:cover;
+    background-attachment: fixed;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px 20px;
+}
+
+.magic-card{
+    width:100%;
+    max-width:480px;
+    background:rgba(9,14,32,0.72);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(14px);
+    border-radius:22px;
+    padding:42px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.45);
+}
+
+.magic-card h2{
+    font-family:'Cinzel', serif;
+    text-align:center;
+    color:#edf3ff;
+    margin-bottom:28px;
+    font-size:2.4rem;
+}
+
+.form-control,
+.form-select{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.06);
+    color:white;
+    padding:14px;
+    border-radius:12px;
+    margin-bottom:18px;
+
+}
+
+.form-control:focus,
+.form-select:focus{
+    background:rgba(255,255,255,0.06);
+    border-color:#3656d9;
+    box-shadow:none;
+    color:white;
+}
+
+.form-select option{
+    background:#0b132d;
+    color:#ffffff;
+}
+.form-control::placeholder{
+    color:#9ea8bc;
+}
+
+.page-title{
+    font-family:'Cinzel', serif;
+    text-align:center;
+    font-size:3.2rem;
+    color:#edf3ff;
+    margin-bottom:40px;
+}
+
+.table-section{
+    min-height:100vh;
+    background:
+    linear-gradient(rgba(4,8,22,0.9), rgba(4,8,22,0.45)),
+    url('/images/books-bg.png');
+    background-size:cover;
+    background-position:center;
+    padding:60px 20px;
+}
+
+.table{
+    overflow:hidden;
+    border-radius:18px;
+    background:rgba(8,14,32,0.82);
+    color:white;
+    border:1px solid rgba(255,255,255,0.06);
+}
+
+.table thead{
+    background:#101c46;
+}
+
+.table tbody tr{
+    background:rgba(255,255,255,0.02);
+    transition:0.3s;
+}
+
+.table tbody tr:hover{
+    background:rgba(255,255,255,0.05);
+}
+
+.btn-warning{
+    background:#1f43c7;
+    border:none;
+    color:white;
+}
+
+.btn-warning:hover{
+    background:#3257dd;
+    color:white;
+}
+
+.btn-danger{
+    background:#922d2d;
+    border:none;
+}
+
+.btn-danger:hover{
+    background:#b93f3f;
+}
+
+@media(max-width:768px){
+
+    .hero-content h1{
+        font-size:3.4rem;
+    }
+
+    .hero-content p{
+        font-size:1rem;
+    }
+
+    .magic-card{
+        padding:28px;
+    }
+
+    .page-title{
+        font-size:2.3rem;
+    }
+}

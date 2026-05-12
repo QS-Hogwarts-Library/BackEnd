@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: html(~{::#content})}">
+
+<body>
+
+<div id="content">
+
+    <div class="form-container">
+
+        <div class="magic-card">
+
+            <h2>Adicionar Livro</h2>
+
+            <form th:action="${book.id == null} ?
+                  @{/books} :
+                  @{/books/{id}(id=${book.id})}"
+                  th:object="${book}"
+                  method="post">
+
+                <input type="text"
+                       th:field="*{title}"
+                       class="form-control"
+                       placeholder="Título do livro">
+
+                <input type="text"
+                       th:field="*{author}"
+                       class="form-control"
+                       placeholder="Autor">
+
+                <input type="text"
+                       th:field="*{subject}"
+                       class="form-control"
+                       placeholder="Categoria">
+
+                <select th:field="*{statusLeitura}"
+                        class="form-select">
+
+                    <option value="">
+                        Status da leitura
+                    </option>
+
+                    <option value="Lendo">
+                        Lendo
+                    </option>
+
+                    <option value="Finalizado">
+                        Finalizado
+                    </option>
+
+                    <option value="Pausado">
+                        Pausado
+                    </option>
+
+                </select>
+
+                <button type="submit"
+                        class="magic-btn w-100">
+
+                    Salvar Livro
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

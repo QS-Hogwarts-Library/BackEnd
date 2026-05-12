@@ -1,12 +1,13 @@
 package com.example.educationalqualityproject.service;
 
-import com.example.educationalqualityproject.entity.Book;
-import com.example.educationalqualityproject.repository.BookRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.educationalqualityproject.entity.Book;
+import com.example.educationalqualityproject.repository.BookRepository;
 
 @Service
 public class BookService {
@@ -23,7 +24,7 @@ public class BookService {
     }
 
     public Book saveBook(Book book) {
-        // Regra de negócio: evitar títulos duplicados
+        
         if (book.getId() == null && bookRepository.existsByTitle(book.getTitle())) {
             throw new RuntimeException("Este título já existe no acervo de Hogwarts!");
         }

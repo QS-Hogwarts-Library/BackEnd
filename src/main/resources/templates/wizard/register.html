@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+xmlns:th="http://www.thymeleaf.org"
+th:replace="~{layout :: html(~{::#content})}">
+
+<body>
+
+<div id="content">
+
+<div class="form-container">
+
+<div class="magic-card">
+
+<h2>Registro de Bruxos</h2>
+
+<form th:action="@{/wizards}"
+th:object="${wizard}"
+method="post">
+
+<input type="text"
+th:field="*{name}"
+class="form-control"
+placeholder="Nome do Bruxo">
+
+<input type="email"
+th:field="*{email}"
+class="form-control"
+placeholder="E-mail mágico">
+
+<input type="password"
+th:field="*{magicRegistration}"
+class="form-control"
+placeholder="Registro mágico">
+
+<button type="submit"
+class="magic-btn w-100">
+
+Registrar Bruxo
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

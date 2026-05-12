@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+xmlns:th="http://www.thymeleaf.org"
+th:replace="~{layout :: html(~{::#content})}">
+
+<body>
+
+<div id="content">
+
+<section class="table-section">
+
+<div class="container">
+
+<h1 class="page-title">
+
+Bruxos Registrados
+
+</h1>
+
+<div class="text-center mb-4">
+
+<a href="/wizards/register"
+class="magic-btn">
+
+Novo Bruxo
+
+</a>
+
+</div>
+
+<div class="table-responsive">
+
+<table class="table table-dark table-hover align-middle">
+
+<thead>
+
+<tr>
+<th>Nome</th>
+<th>Email</th>
+<th>Senha</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr th:each="wizard : ${wizards}">
+
+<td th:text="${wizard.name}"></td>
+
+<td th:text="${wizard.email}"></td>
+
+<td th:text="${wizard.magicRegistration}"></td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</body>
+</html>

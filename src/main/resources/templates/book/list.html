@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: html(~{::#content})}">
+
+<body>
+
+<div id="content">
+
+<section class="table-section">
+
+<div class="container">
+
+<h1 class="page-title">
+Biblioteca de Hogwarts
+</h1>
+
+<div class="text-center mb-4">
+
+<a href="/books/new"
+class="magic-btn">
+
+Adicionar Livro
+
+</a>
+
+</div>
+
+<div class="table-responsive">
+
+<table class="table table-dark table-hover align-middle">
+
+<thead>
+
+<tr>
+<th>Título</th>
+<th>Autor</th>
+<th>Categoria</th>
+<th>Status</th>
+<th>Ações</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr th:each="book : ${books}">
+
+<td th:text="${book.title}"></td>
+
+<td th:text="${book.author}"></td>
+
+<td th:text="${book.subject}"></td>
+
+<td th:text="${book.statusLeitura}"></td>
+
+<td>
+
+<a th:href="@{/books/{id}/edit(id=${book.id})}"
+class="btn btn-warning btn-sm">
+
+Editar
+
+</a>
+
+<a th:href="@{/books/{id}/delete(id=${book.id})}"
+class="btn btn-danger btn-sm">
+
+Excluir
+
+</a>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</body>
+</html>
