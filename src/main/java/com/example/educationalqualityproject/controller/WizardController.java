@@ -42,4 +42,61 @@ public class WizardController {
 
         return "redirect:/wizards";
     }
+
+    @GetMapping("/{id}")
+    public String getWizardById(
+            @PathVariable String id,
+            Model model
+    ) {
+
+        Wizard wizard = wizardService.getWizardById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Bruxo não encontrado: " + id
+                        )
+                );
+
+        model.addAttribute("wizard", wizard);
+
+        return "wizard/details";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(
+            @PathVariable String id,
+            Model model
+    ) {
+
+        Wizard wizard = wizardService.getWizardById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Bruxo não encontrado: " + id
+                        )
+                );
+
+        model.addAttribute("wizard", wizard);
+
+        return "wizard/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateWizard(
+            @PathVariable String id,
+            @ModelAttribute Wizard wizard
+    ) {
+
+        wizard.setId(id);
+
+        wizardService.saveWizard(wizard);
+
+        return "redirect:/wizards";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteWizard(@PathVariable String id) {
+
+        wizardService.deleteWizard(id);
+
+        return "redirect:/wizards";
+    }
 }
