@@ -13,6 +13,7 @@ public class Wizard {
     private String name;
     private String email;
     private String magicRegistration;
+    private boolean admin;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -70,12 +71,20 @@ public class Wizard {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
+    
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isAdmin() {
+    return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

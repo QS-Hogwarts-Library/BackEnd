@@ -21,21 +21,25 @@
 
                 <input type="text"
                        th:field="*{title}"
+                       required
                        class="form-control"
                        placeholder="Título do livro">
 
                 <input type="text"
                        th:field="*{author}"
+                       required
                        class="form-control"
                        placeholder="Autor">
 
                 <input type="text"
                        th:field="*{subject}"
+                        required
                        class="form-control"
                        placeholder="Categoria">
 
                 <select th:field="*{statusLeitura}"
-                        class="form-select">
+                        class="form-select"
+                        required>
 
                     <option value="">
                         Status da leitura

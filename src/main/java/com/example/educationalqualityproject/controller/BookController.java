@@ -1,17 +1,21 @@
 package com.example.educationalqualityproject.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.example.educationalqualityproject.entity.Book;
 import com.example.educationalqualityproject.entity.Wizard;
 import com.example.educationalqualityproject.service.BookService;
 
 import jakarta.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/books")
@@ -96,6 +100,9 @@ public class BookController {
                                 "Invalid book Id:" + id
                         )
                 );
+        if (!book.getWizardId().equals(loggedWizard.getId())) {
+         return "redirect:/books";
+        }
 
         model.addAttribute("book", book);
 
@@ -116,6 +123,14 @@ public class BookController {
         if (loggedWizard == null) {
             return "redirect:/login";
         }
+        Book existingBook = bookService.getBookById(id)
+        .orElseThrow(() ->
+                new IllegalArgumentException("Livro não encontrado")
+        );
+
+        if (!existingBook.getWizardId().equals(loggedWizard.getId())) {
+                return "redirect:/books";
+        }
 
         book.setId(id);
     
@@ -132,7 +147,7 @@ public class BookController {
             @PathVariable String id,
             HttpSession session
     ) {
-
+        
         Wizard loggedWizard =
                 (Wizard) session.getAttribute("loggedWizard");
 
@@ -140,7 +155,17 @@ public class BookController {
             return "redirect:/login";
         }
 
+        Book existingBook = bookService.getBookById(id)
+        .orElseThrow(() ->
+                new IllegalArgumentException("Livro não encontrado")
+        );
+
+        if (!existingBook.getWizardId().equals(loggedWizard.getId())) {
+            return "redirect:/books";
+        }
+
         bookService.deleteBook(id);
+
 
         return "redirect:/books";
     }

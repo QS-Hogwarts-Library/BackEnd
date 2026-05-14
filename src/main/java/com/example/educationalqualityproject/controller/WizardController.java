@@ -1,14 +1,21 @@
 package com.example.educationalqualityproject.controller;
 
-import com.example.educationalqualityproject.entity.Wizard;
-import com.example.educationalqualityproject.service.WizardService;
 
+import java.util.List;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+import com.example.educationalqualityproject.entity.Wizard;
+import com.example.educationalqualityproject.service.WizardService;
+
+
 
 @Controller
 @RequestMapping("/wizards")
@@ -17,15 +24,31 @@ public class WizardController {
     @Autowired
     private WizardService wizardService;
 
-    @GetMapping
-    public String listWizards(Model model) {
+   @GetMapping
+    public String listWizards(
+        Model model,
+        HttpSession session
+        ) 
+   {
 
-        List<Wizard> wizards = wizardService.getAllWizards();
+    Wizard loggedWizard =
+            (Wizard) session.getAttribute("loggedWizard");
 
-        model.addAttribute("wizards", wizards);
-
-        return "wizard/list";
+    if (loggedWizard == null) {
+        return "redirect:/login";
     }
+
+    if (!loggedWizard.isAdmin()) {
+        return "redirect:/books";
+    }
+
+    List<Wizard> wizards =
+            wizardService.getAllWizards();
+
+    model.addAttribute("wizards", wizards);
+
+    return "wizard/list";
+}
 
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
@@ -36,11 +59,35 @@ public class WizardController {
     }
 
     @PostMapping
-    public String createWizard(@ModelAttribute Wizard wizard) {
+      public String createWizard(
+                @ModelAttribute Wizard wizard,
+                Model model)
+        {     
+
+    if (wizardService.emailAlreadyExists(wizard.getEmail())) {
+
+        model.addAttribute(
+                "error",
+                "E-mail já cadastrado!"
+        );
+
+        return "wizard/register";
+    }
+
+    if (wizard.getEmail().equals("admin@hogwarts.com")) {
+
+     wizard.setAdmin(true);
+
+     } 
+     
+     else {
+
+        wizard.setAdmin(false);
+  }
 
         wizardService.saveWizard(wizard);
 
-        return "redirect:/wizards";
+        return "redirect:/login";
     }
 
     @GetMapping("/{id}")
@@ -61,22 +108,36 @@ public class WizardController {
         return "wizard/details";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditForm(
-            @PathVariable String id,
-            Model model
-    ) {
+   @GetMapping("/edit/{id}")
+public String showEditForm(
+        @PathVariable String id,
+        Model model,
+        HttpSession session
+) {
 
-        Wizard wizard = wizardService.getWizardById(id)
-                .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Bruxo não encontrado: " + id
-                        )
-                );
+    Wizard loggedWizard =
+            (Wizard) session.getAttribute("loggedWizard");
 
-        model.addAttribute("wizard", wizard);
+    if (loggedWizard == null) {
+        return "redirect:/login";
+    }
 
-        return "wizard/edit";
+    if (!loggedWizard.isAdmin()
+            && !loggedWizard.getId().equals(id)) {
+
+        return "redirect:/books";
+    }
+
+    Wizard wizard = wizardService.getWizardById(id)
+            .orElseThrow(() ->
+                    new IllegalArgumentException(
+                            "Bruxo não encontrado: " + id
+                    )
+            );
+
+    model.addAttribute("wizard", wizard);
+
+    return "wizard/edit";
     }
 
     @PostMapping("/update/{id}")

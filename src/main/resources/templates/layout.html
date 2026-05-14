@@ -45,50 +45,101 @@
         <div class="collapse navbar-collapse"
              id="navbarNav">
 
-            <ul class="navbar-nav ms-auto">
+           <ul class="navbar-nav ms-auto">
 
-                <li class="nav-item">
+    <li class="nav-item">
 
-                    <a class="nav-link"
-                       href="/">
+        <a class="nav-link"
+           href="/">
 
-                        Início
+            Início
 
-                    </a>
+        </a>
 
-                </li>
+    </li>
 
-                <li class="nav-item">
+    <li class="nav-item">
 
-                    <a class="nav-link"
-                       href="/books">
+        <a class="nav-link"
+           href="/books">
 
-                        Livros
+            Livros
 
-                    </a>
+        </a>
 
-                </li>
+    </li>
 
-                <li class="nav-item">
+    <!-- MENU ADMIN -->
+    <li class="nav-item"
+        th:if="${session.loggedWizard != null
+        and session.loggedWizard.admin}">
 
-                    <a class="nav-link"
-                      href="/login">
+        <a class="nav-link"
+           href="/wizards">
 
-                        Entrar
+            Usuários
 
-                    </a>
+        </a>
 
-                </li>
+    </li>
 
-                <li class="nav-item">
+    <!-- LOGIN -->
+    <li class="nav-item"
+        th:if="${session.loggedWizard == null}">
 
-                    <a class="nav-link" href="/wizards/register">
-                      Registrar
-                    </a>
+        <a class="nav-link"
+           href="/login">
 
-                </li>
+            Entrar
 
-            </ul>
+        </a>
+
+    </li>
+
+    <!-- REGISTRO -->
+    <li class="nav-item"
+        th:if="${session.loggedWizard == null}">
+
+        <a class="nav-link"
+           href="/wizards/register">
+
+            Registrar
+
+        </a>
+
+    </li>
+
+    <!-- USUÁRIO LOGADO -->
+    <li class="nav-item"
+        th:if="${session.loggedWizard != null}">
+
+        <span class="nav-link">
+
+            Olá,
+            <span th:text="${session.loggedWizard.name}"></span>!
+
+            <span th:if="${session.loggedWizard.admin}">
+                (Admin)
+            </span>
+
+        </span>
+
+    </li>
+
+    <!-- LOGOUT -->
+    <li class="nav-item"
+        th:if="${session.loggedWizard != null}">
+
+        <a class="nav-link text-danger"
+           href="/logout">
+
+            Sair
+
+        </a>
+
+    </li>
+
+</ul>
 
         </div>
 

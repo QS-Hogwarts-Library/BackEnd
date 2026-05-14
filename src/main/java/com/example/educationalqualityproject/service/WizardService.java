@@ -1,13 +1,13 @@
 package com.example.educationalqualityproject.service;
 
-import com.example.educationalqualityproject.entity.Wizard;
-import com.example.educationalqualityproject.repository.WizardRepository;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.educationalqualityproject.entity.Wizard;
+import com.example.educationalqualityproject.repository.WizardRepository;
 
 @Service
 public class WizardService {
@@ -47,5 +47,10 @@ public class WizardService {
                 );
 
         return wizard.orElse(null);
+    }
+
+    public boolean emailAlreadyExists(String email) {
+
+    return wizardRepository.existsByEmail(email);
     }
 }

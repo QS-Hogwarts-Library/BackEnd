@@ -32,6 +32,11 @@ th:field="*{magicRegistration}"
 class="form-control"
 placeholder="Registro mágico">
 
+<p th:if="${error}"
+   th:text="${error}"
+   style="color:red; margin-top:10px;">
+</p>
+
 <button type="submit"
 class="magic-btn w-100">
 

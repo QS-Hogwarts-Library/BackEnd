@@ -37,9 +37,9 @@ Novo Bruxo
 <tr>
 <th>Nome</th>
 <th>Email</th>
-<th>Senha</th>
+<th>Permissão</th>
+<th>Ações</th>
 </tr>
-
 </thead>
 
 <tbody>
@@ -50,7 +50,28 @@ Novo Bruxo
 
 <td th:text="${wizard.email}"></td>
 
-<td th:text="${wizard.magicRegistration}"></td>
+<td>
+
+    <span th:if="${wizard.admin}">
+        Admin
+    </span>
+
+    <span th:unless="${wizard.admin}">
+        Usuário
+    </span>
+
+</td>
+
+<td>
+
+    <a th:href="@{/wizards/edit/{id}(id=${wizard.id})}"
+       class="btn btn-warning btn-sm">
+
+        Editar
+
+    </a>
+
+</td>
 
 </tr>
 
