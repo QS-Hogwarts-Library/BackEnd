@@ -1,39 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br"
-xmlns:th="http://www.thymeleaf.org"
-th:replace="~{layout :: html(~{::#content})}">
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: html(~{::#content})}">
 
 <body>
 
 <div id="content">
 
-<div class="form-container">
+    <div class="form-container">
 
-<div class="magic-card">
+        <div class="magic-card">
 
-<h2>Portal Mágico</h2>
+            <h2>Portal Mágico</h2>
 
-<form>
+            <form th:action="@{/login}" method="post">
 
-<input type="email"
-class="form-control"
-placeholder="E-mail mágico">
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       placeholder="E-mail mágico"
+                       required>
 
-<input type="password"
-class="form-control"
-placeholder="Senha">
+                <input type="password"
+                       name="magicRegistration"
+                       class="form-control"
+                       placeholder="Registro mágico"
+                       required>
 
-<button class="magic-btn w-100">
+                <button type="submit"
+                        class="magic-btn w-100">
 
-Entrar
+                    Entrar
 
-</button>
+                </button>
 
-</form>
+            </form>
 
-</div>
+            <p th:if="${error}"
+               th:text="${error}"
+               style="color:red; margin-top:10px;">
+            </p>
 
-</div>
+        </div>
+
+    </div>
 
 </div>
 

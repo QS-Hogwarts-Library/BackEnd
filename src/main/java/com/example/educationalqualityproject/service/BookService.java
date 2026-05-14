@@ -2,6 +2,7 @@ package com.example.educationalqualityproject.service;
 
 import com.example.educationalqualityproject.entity.Book;
 import com.example.educationalqualityproject.repository.BookRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,23 +19,25 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    public List<Book> getBooksByWizardId(String wizardId) {
+
+        return bookRepository.findByWizardId(wizardId);
+    }
+
     public Optional<Book> getBookById(String id) {
+
         return bookRepository.findById(id);
     }
 
+    // SALVAR
     public Book saveBook(Book book) {
+
         return bookRepository.save(book);
     }
 
+    // DELETAR
     public void deleteBook(String id) {
+
         bookRepository.deleteById(id);
-    }
-
-    public boolean existsByAuthor(String author) {
-        return bookRepository.existsByAuthor(author);
-    }
-
-    public boolean existsByTitle(String title) {
-        return bookRepository.existsByTitle(title);
     }
 }

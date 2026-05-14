@@ -41,11 +41,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-</dependency>
-
         <!-- VCR-like testing with MockWebServer for HTTP recording/playback -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
