@@ -58,12 +58,14 @@ jobs:
         env:
           SPRING_PROFILES_ACTIVE: ci
 
-  verify-coverage:
+verify-coverage:
     runs-on: ubuntu-latest
     needs: test
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # O SonarQube precisa do histórico completo do Git para analisar as linhas de código
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -79,6 +81,17 @@ jobs:
         run: ./mvnw -B -ntp clean verify -Dtest="**/vcr/*Test,**/service/*Test,**/controller/*Test"
         env:
           SPRING_PROFILES_ACTIVE: ci
+
+      - name: Analyze with SonarCloud
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # !!! cadastrar esse nas configurações do repositório
+        run: |
+          ./mvnw -B -ntp sonar:sonar \
+            -Dsonar.projectKey=qs-hogwarts-library \
+            -Dsonar.organization=qs-hogwarts-library \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
       - name: Upload JaCoCo report
         if: always()
