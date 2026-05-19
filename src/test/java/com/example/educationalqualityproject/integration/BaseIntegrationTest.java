@@ -7,15 +7,26 @@ import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
+@SpringBootTest
 public abstract class BaseIntegrationTest {
 
+    static {
+    System.setProperty("DOCKER_HOST", "npipe:////./pipe/dockerDesktopLinuxEngine");
+    System.setProperty("TESTCONTAINERS_RYUK_DISABLED", "true");
+    System.setProperty("TESTCONTAINERS_CHECKS_DISABLE", "true");
+}
+
     @Container
-    static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:7.0");
+    static MongoDBContainer mongoDBContainer =
+            new MongoDBContainer("mongo:7.0")
+                    .withEnv("MONGO_INITDB_DATABASE", "testdb");
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
+        registry.add(
+                "spring.data.mongodb.uri",
+                mongoDBContainer::getReplicaSetUrl
+        );
     }
 }

@@ -1,10 +1,10 @@
 package com.example.educationalqualityproject.repository;
 
-import com.example.educationalqualityproject.entity.Book;
+import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.List;
+import com.example.educationalqualityproject.entity.Book;
 
 public interface BookRepository
         extends MongoRepository<Book, String> {
