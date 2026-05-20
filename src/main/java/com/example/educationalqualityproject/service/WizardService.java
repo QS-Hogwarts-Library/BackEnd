@@ -25,6 +25,16 @@ public class WizardService {
         return wizardRepository.findById(id);
     }
 
+    public boolean emailAlreadyExists(String email) {
+
+        return wizardRepository.existsByEmail(email);
+    }
+
+    public Optional<Wizard> findByEmail(String email) {
+
+        return wizardRepository.findByEmail(email);
+    }
+
  public Wizard saveWizard(Wizard wizard) {
 
     boolean emailExists =
