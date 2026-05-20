@@ -25,10 +25,22 @@ public class WizardService {
         return wizardRepository.findById(id);
     }
 
-    public Wizard saveWizard(Wizard wizard) {
+ public Wizard saveWizard(Wizard wizard) {
 
-        return wizardRepository.save(wizard);
+    boolean emailExists =
+            wizardRepository.existsByEmail(
+                    wizard.getEmail()
+            );
+
+    if (emailExists && wizard.getId() == null) {
+
+        throw new RuntimeException(
+                "Email já cadastrado"
+        );
     }
+
+    return wizardRepository.save(wizard);
+}
 
     public void deleteWizard(String id) {
 
@@ -47,10 +59,5 @@ public class WizardService {
                 );
 
         return wizard.orElse(null);
-    }
-
-    public boolean emailAlreadyExists(String email) {
-
-    return wizardRepository.existsByEmail(email);
     }
 }

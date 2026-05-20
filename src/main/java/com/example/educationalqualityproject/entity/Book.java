@@ -1,9 +1,9 @@
     package com.example.educationalqualityproject.entity;
 
+    import java.time.LocalDateTime;
+
     import org.springframework.data.annotation.Id;
     import org.springframework.data.mongodb.core.mapping.Document;
-
-    import java.time.LocalDateTime;
 
     @Document(collection = "books")
     public class Book {
