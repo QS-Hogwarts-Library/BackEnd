@@ -32,6 +32,16 @@ th:field="*{magicRegistration}"
 class="form-control"
 placeholder="Registro mágico">
 
+<input type="text"
+th:field="*{cep}"
+class="form-control"
+placeholder="CEP (Apenas números)"
+maxlength="8"
+style="margin-bottom: 5px;">
+<small style="display: block; margin-bottom: 15px; text-align: left; opacity: 0.8;">
+    Insira seu CEP para preenchimento automático do endereço.
+</small>
+
 <p th:if="${error}"
    th:text="${error}"
    style="color:red; margin-top:10px;">

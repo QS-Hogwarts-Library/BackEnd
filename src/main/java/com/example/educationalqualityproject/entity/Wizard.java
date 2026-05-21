@@ -13,6 +13,14 @@ public class Wizard {
     private String name;
     private String email;
     private String magicRegistration;
+    
+    // Novos campos de endereço (ViaCEP)
+    private String cep;
+    private String logradouro;
+    private String bairro;
+    private String localidade;
+    private String uf;
+
     private boolean admin;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -64,6 +72,55 @@ public class Wizard {
         this.updatedAt = LocalDateTime.now();
     }
 
+    // --- Início dos Getters e Setters de Endereço ---
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+        this.updatedAt = LocalDateTime.now();
+    }
+    
+    // --- Fim dos Getters e Setters de Endereço ---
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -81,10 +138,11 @@ public class Wizard {
     }
 
     public boolean isAdmin() {
-    return admin;
+        return admin;
     }
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+        this.updatedAt = LocalDateTime.now();
     }
 }

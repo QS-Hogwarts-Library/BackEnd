@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html(~{::#content})}">
+<body>
+<div id="content">
+    <div class="container mt-5">
+        <div class="magic-card">
+            <h2>Detalhes do Bruxo</h2>
+            <p><strong>Nome:</strong> <span th:text="${wizard.name}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${wizard.email}"></span></p>
+            <a href="/wizards" class="btn btn-primary">Voltar para Listagem</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

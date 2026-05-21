@@ -35,7 +35,8 @@ public class WizardServiceParameterizedTest extends BaseIntegrationTest {
     @CsvSource({
             "Harry Potter,harry@hogwarts.com,EXPECTO_PATRONUM",
             "Hermione Granger,hermione@hogwarts.com,WINGARDIUM_LEVIOSA",
-            "Ron Weasley,ron@hogwarts.com,CHOCO_FROG"
+            "Ron Weasley,ron@hogwarts.com,CHOCO_FROG",
+            "Draco Malfoi, draquinho@sonserina.com, BOOKS_OF_THE_BOOKS" 
     })
     @DisplayName("Deve criar múltiplos wizards")
     void shouldCreateDifferentWizards(String name, String email, String magicRegistration) {

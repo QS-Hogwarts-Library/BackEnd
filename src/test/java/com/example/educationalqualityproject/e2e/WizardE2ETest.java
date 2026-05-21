@@ -31,27 +31,31 @@ public class WizardE2ETest extends BaseIntegrationTest {
 
     @Test
     void fluxoCompletoWebWizard_DeveCadastrarListarEDeletar() throws Exception {
-        // 1. Simular preenchimento do formulário HTML de cadastro (Rota: POST /wizards)
+        // 1. Cadastra (não precisa de sessão, é público)
         mockMvc.perform(post("/wizards")
                         .param("name", "Ron Weasley")
                         .param("email", "ron@hogwarts.com")
-                        .param("magicRegistration", "ROUBADO123"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/wizards")); // Redireciona para a listagem
+                        .param("magicRegistration", "ROUBADO123")
+                        .param("cep", "")) 
+                .andExpect(status().is3xxRedirection());
 
-        // Valida se persistiu no banco real do contêiner
+        // Valida se persistiu no banco real do Testcontainers
         assertFalse(wizardRepository.findAll().isEmpty());
         Wizard saved = wizardRepository.findByEmail("ron@hogwarts.com").orElseThrow();
 
-        // 2. Acessa a listagem geral e verifica a renderização do nome no HTML
-        mockMvc.perform(get("/wizards"))
+        // 2. Prepara o admin para as próximas chamadas
+        Wizard admin = new Wizard();
+        admin.setAdmin(true);
+
+        // 3. Acede à listagem geral (autenticado) e verifica o conteúdo
+        mockMvc.perform(get("/wizards").sessionAttr("loggedWizard", admin))
                 .andExpect(status().isOk())
-                .andExpect(view().name("wizard/list")) // View real do seu controller
+                .andExpect(view().name("wizard/list"))
                 .andExpect(model().attributeExists("wizards"))
                 .andExpect(content().string(containsString("Ron Weasley")));
 
-        // 3. Acessa a página de detalhes do Bruxo específico
-        mockMvc.perform(get("/wizards/" + saved.getId()))
+        // 4. Acede à página de detalhes do Bruxo específico
+        mockMvc.perform(get("/wizards/" + saved.getId()).sessionAttr("loggedWizard", admin))
                 .andExpect(status().isOk())
                 .andExpect(view().name("wizard/details"))
                 .andExpect(model().attributeExists("wizard"));

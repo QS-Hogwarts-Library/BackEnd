@@ -8,12 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.example.educationalqualityproject.entity.Wizard;
 import com.example.educationalqualityproject.repository.WizardRepository;
+import com.example.educationalqualityproject.dto.ViaCepResponse;
 
 @Service
 public class WizardService {
 
     @Autowired
     private WizardRepository wizardRepository;
+
+    // Injetamos o novo serviço do ViaCEP aqui
+    @Autowired
+    private ViaCepService viaCepService;
 
     public List<Wizard> getAllWizards() {
 
@@ -35,18 +40,32 @@ public class WizardService {
         return wizardRepository.findByEmail(email);
     }
 
- public Wizard saveWizard(Wizard wizard) {
+public Wizard saveWizard(Wizard wizard) {
+    // 1. Validação de E-mail: Só executa se o e-mail estiver presente
+    if (wizard.getEmail() != null && !wizard.getEmail().isBlank()) {
+        // Regex simplificado que aceita e-mails padrão
+        if (!wizard.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            throw new RuntimeException("Formato de e-mail inválido");
+        }
+    } else {
+        // Se o e-mail for nulo ou vazio, também deve lançar erro para o cadastro
+        throw new RuntimeException("Formato de e-mail inválido");
+    }
 
-    boolean emailExists =
-            wizardRepository.existsByEmail(
-                    wizard.getEmail()
-            );
-
+    // 2. Verificação de existência no banco
+    boolean emailExists = wizardRepository.existsByEmail(wizard.getEmail());
+    // Garante que não barra o próprio usuário na edição (se ele já tiver ID)
     if (emailExists && wizard.getId() == null) {
+        throw new RuntimeException("Email já cadastrado");
+    }
 
-        throw new RuntimeException(
-                "Email já cadastrado"
-        );
+    // 3. Lógica ViaCEP
+    if (wizard.getCep() != null && !wizard.getCep().isBlank()) {
+        ViaCepResponse endereco = viaCepService.consultarCep(wizard.getCep());
+        wizard.setLogradouro(endereco.logradouro());
+        wizard.setBairro(endereco.bairro());
+        wizard.setLocalidade(endereco.localidade());
+        wizard.setUf(endereco.uf());
     }
 
     return wizardRepository.save(wizard);

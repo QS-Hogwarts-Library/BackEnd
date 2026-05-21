@@ -1,5 +1,6 @@
 package com.example.educationalqualityproject.controller;
 
+import com.example.educationalqualityproject.entity.Wizard;
 import com.example.educationalqualityproject.integration.BaseIntegrationTest;
 
 import org.junit.jupiter.api.Test;
@@ -18,18 +19,15 @@ class WizardControllerTest extends BaseIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
+  @Test
     void shouldAccessWizardsRoute() throws Exception {
-
-        String response = mockMvc.perform(get("/wizards"))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-
-        assertTrue(response != null);
+        Wizard adminWizard = new Wizard();
+        adminWizard.setAdmin(true);
+        
+        mockMvc.perform(get("/wizards")
+                        .sessionAttr("loggedWizard", adminWizard))
+                .andExpect(status().isOk());
     }
-
     @Test
     void shouldAccessLoginPage() throws Exception {
 

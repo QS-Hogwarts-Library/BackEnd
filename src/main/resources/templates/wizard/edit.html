@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+xmlns:th="http://www.thymeleaf.org"
+th:replace="~{layout :: html(~{::#content})}">
+
+<body>
+
+<div id="content">
+
+<div class="form-container">
+
+<div class="magic-card">
+
+<h2>Editar Perfil Mágico</h2>
+
+<form th:action="@{/wizards/update/{id}(id=${wizard.id})}"
+th:object="${wizard}"
+method="post">
+
+<div class="mb-3">
+    <label class="form-label">Nome</label>
+    <input type="text" th:field="*{name}" class="form-control" required>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">E-mail</label>
+    <input type="email" th:field="*{email}" class="form-control" required>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Registro Mágico</label>
+    <input type="password" th:field="*{magicRegistration}" class="form-control">
+</div>
+
+<hr>
+<h5 class="mt-3 mb-3">Endereço de Correspondência (Coruja)</h5>
+
+<div class="mb-3">
+    <label class="form-label">CEP</label>
+    <input type="text" th:field="*{cep}" class="form-control" maxlength="8">
+    <small class="text-muted">Se alterar o CEP, os dados abaixo serão atualizados ao salvar.</small>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Logradouro</label>
+    <input type="text" th:field="*{logradouro}" class="form-control" readonly style="background-color: #e9ecef;">
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Bairro</label>
+    <input type="text" th:field="*{bairro}" class="form-control" readonly style="background-color: #e9ecef;">
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Cidade / Estado</label>
+    <input type="text" th:value="*{localidade} + ' - ' + *{uf}" class="form-control" readonly style="background-color: #e9ecef;">
+</div>
+
+<p th:if="${error}"
+   th:text="${error}"
+   style="color:red; margin-top:10px; font-weight: bold;">
+</p>
+
+<button type="submit" class="magic-btn w-100 mt-3">
+    Salvar Alterações
+</button>
+
+</form>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

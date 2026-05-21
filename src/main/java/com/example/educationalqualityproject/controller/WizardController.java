@@ -1,6 +1,5 @@
 package com.example.educationalqualityproject.controller;
 
-
 import java.util.List;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.educationalqualityproject.entity.Wizard;
 import com.example.educationalqualityproject.service.WizardService;
 
-
-
 @Controller
 @RequestMapping("/wizards")
 public class WizardController {
@@ -24,140 +21,100 @@ public class WizardController {
     @Autowired
     private WizardService wizardService;
 
-   @GetMapping
-    public String listWizards(
-        Model model,
-        HttpSession session
-        ) 
-   {
+    @GetMapping
+    public String listWizards(Model model, HttpSession session) {
+        Wizard loggedWizard = (Wizard) session.getAttribute("loggedWizard");
 
-    Wizard loggedWizard =
-            (Wizard) session.getAttribute("loggedWizard");
+        if (loggedWizard == null) {
+            return "redirect:/login";
+        }
 
-    if (loggedWizard == null) {
-        return "redirect:/login";
+        if (!loggedWizard.isAdmin()) {
+            return "redirect:/books";
+        }
+
+        List<Wizard> wizards = wizardService.getAllWizards();
+        model.addAttribute("wizards", wizards);
+
+        return "wizard/list";
     }
-
-    if (!loggedWizard.isAdmin()) {
-        return "redirect:/books";
-    }
-
-    List<Wizard> wizards =
-            wizardService.getAllWizards();
-
-    model.addAttribute("wizards", wizards);
-
-    return "wizard/list";
-}
 
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
-
         model.addAttribute("wizard", new Wizard());
-
         return "wizard/register";
     }
 
     @PostMapping
-      public String createWizard(
-                @ModelAttribute Wizard wizard,
-                Model model)
-        {     
+    public String createWizard(@ModelAttribute Wizard wizard, Model model) {     
+        try {
+            if (wizardService.emailAlreadyExists(wizard.getEmail())) {
+                model.addAttribute("error", "E-mail já cadastrado!");
+                return "wizard/register";
+            }
 
-    if (wizardService.emailAlreadyExists(wizard.getEmail())) {
+            if (wizard.getEmail().equals("admin@hogwarts.com")) {
+                wizard.setAdmin(true);
+            } else {
+                wizard.setAdmin(false);
+            }
 
-        model.addAttribute(
-                "error",
-                "E-mail já cadastrado!"
-        );
+            wizardService.saveWizard(wizard);
+            return "redirect:/login";
 
-        return "wizard/register";
-    }
-
-    if (wizard.getEmail().equals("admin@hogwarts.com")) {
-
-     wizard.setAdmin(true);
-
-     } 
-     
-     else {
-
-        wizard.setAdmin(false);
-  }
-
-        wizardService.saveWizard(wizard);
-
-        return "redirect:/login";
+        } catch (RuntimeException e) {
+            // Captura o erro do CEP e exibe na tela de registro
+            model.addAttribute("error", e.getMessage());
+            return "wizard/register";
+        }
     }
 
     @GetMapping("/{id}")
-    public String getWizardById(
-            @PathVariable String id,
-            Model model
-    ) {
-
+    public String getWizardById(@PathVariable String id, Model model) {
         Wizard wizard = wizardService.getWizardById(id)
-                .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Bruxo não encontrado: " + id
-                        )
-                );
+                .orElseThrow(() -> new IllegalArgumentException("Bruxo não encontrado: " + id));
 
         model.addAttribute("wizard", wizard);
-
         return "wizard/details";
     }
 
-   @GetMapping("/edit/{id}")
-public String showEditForm(
-        @PathVariable String id,
-        Model model,
-        HttpSession session
-) {
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable String id, Model model, HttpSession session) {
+        Wizard loggedWizard = (Wizard) session.getAttribute("loggedWizard");
 
-    Wizard loggedWizard =
-            (Wizard) session.getAttribute("loggedWizard");
+        if (loggedWizard == null) {
+            return "redirect:/login";
+        }
 
-    if (loggedWizard == null) {
-        return "redirect:/login";
-    }
+        if (!loggedWizard.isAdmin() && !loggedWizard.getId().equals(id)) {
+            return "redirect:/books";
+        }
 
-    if (!loggedWizard.isAdmin()
-            && !loggedWizard.getId().equals(id)) {
+        Wizard wizard = wizardService.getWizardById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Bruxo não encontrado: " + id));
 
-        return "redirect:/books";
-    }
-
-    Wizard wizard = wizardService.getWizardById(id)
-            .orElseThrow(() ->
-                    new IllegalArgumentException(
-                            "Bruxo não encontrado: " + id
-                    )
-            );
-
-    model.addAttribute("wizard", wizard);
-
-    return "wizard/edit";
+        model.addAttribute("wizard", wizard);
+        return "wizard/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String updateWizard(
-            @PathVariable String id,
-            @ModelAttribute Wizard wizard
-    ) {
-
-        wizard.setId(id);
-
-        wizardService.saveWizard(wizard);
-
-        return "redirect:/wizards";
+    public String updateWizard(@PathVariable String id, @ModelAttribute Wizard wizard, Model model) {
+        try {
+            wizard.setId(id);
+            wizardService.saveWizard(wizard);
+            return "redirect:/wizards";
+            
+        } catch (RuntimeException e) {
+            // Captura o erro na hora de atualizar e devolve para a tela de edição
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("wizard", wizard);
+            return "wizard/edit";
+        }
     }
 
     @GetMapping("/delete/{id}")
     public String deleteWizard(@PathVariable String id) {
-
         wizardService.deleteWizard(id);
-
         return "redirect:/wizards";
     }
 }

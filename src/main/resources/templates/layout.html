@@ -69,7 +69,6 @@
 
     </li>
 
-    <!-- MENU ADMIN -->
     <li class="nav-item"
         th:if="${session.loggedWizard != null
         and session.loggedWizard.admin}">
@@ -83,7 +82,6 @@
 
     </li>
 
-    <!-- LOGIN -->
     <li class="nav-item"
         th:if="${session.loggedWizard == null}">
 
@@ -96,7 +94,6 @@
 
     </li>
 
-    <!-- REGISTRO -->
     <li class="nav-item"
         th:if="${session.loggedWizard == null}">
 
@@ -109,7 +106,6 @@
 
     </li>
 
-    <!-- USUÁRIO LOGADO -->
     <li class="nav-item"
         th:if="${session.loggedWizard != null}">
 
@@ -126,7 +122,18 @@
 
     </li>
 
-    <!-- LOGOUT -->
+    <li class="nav-item"
+        th:if="${session.loggedWizard != null}">
+
+        <a class="nav-link text-warning fw-bold"
+           th:href="@{/wizards/edit/{id}(id=${session.loggedWizard.id})}">
+
+            Meu Perfil
+
+        </a>
+
+    </li>
+
     <li class="nav-item"
         th:if="${session.loggedWizard != null}">
 
